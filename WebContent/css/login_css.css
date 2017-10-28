@@ -1,0 +1,49 @@
+.jumbotron
+{
+	margin-bottom: 0px;
+	margin-top: 0px;
+}
+#orange
+{
+	background-color: #f8921e;/*make maroon*/
+	height: 5px; /*problem with the height - check later*/
+	padding:15px;
+}
+#maroon
+{
+	background-color: #a84240;
+	font-family: 'Lora', serif;
+	color:white;
+}
+.box
+{
+	height:430px;
+	background-image: url('images/NCUBackground.jpg');
+	background-repeat: no-repeat;
+	font-family: Tahoma, Geneva, sans-serif;
+}
+h1{
+	font-family: 'Lora', serif;
+}
+.login
+{
+	padding:15px;	
+	border-radius: 25px;
+	width:100%;
+	background-color:#FFDAB9;
+	font-family: Tahoma, Geneva, sans-serif;
+}
+footer
+{
+   	position:fixed;
+   	left:0px;
+   	bottom:0px;
+   	height:40px;
+   	width:100%;
+   	background:black;
+}
+footer > p
+{
+	padding-top:15px;
+	color:white;
+}
