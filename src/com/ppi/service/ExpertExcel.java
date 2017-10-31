@@ -25,7 +25,7 @@ import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import com.ppi.impl.LoginObjs;
+import com.ppi.impl.LoginIMPL;
 import com.ppi.model.Login;
 
 /**
@@ -149,7 +149,7 @@ String savefile = "C:/Users/Harshit/Desktop/new";
 	   login.setStatus("active");
 	   login.setName(name);
 		
-		LoginObjs l=new LoginObjs();
+	   LoginIMPL l=new LoginIMPL();
 		l.saveNewExpert(login);
        
        System.out.println("Import rows "+i);

@@ -23,7 +23,7 @@
       
       <ul class="nav navbar-nav navbar-right">
      <li><a href="#"><%=session.getAttribute("user").toString().toUpperCase()%></a></li>
-      <li><a href="../logout"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
+      <li><a href="../account/logout.jsp"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
     </ul>
     
   </div>

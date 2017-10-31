@@ -25,21 +25,7 @@
   		</header>
   		
   	
-  	<%
-                    String TIME_SERVER = "time-a.nist.gov";
-                    NTPUDPClient timeClient = new NTPUDPClient();
-                    InetAddress inetAddress = InetAddress.getByName(TIME_SERVER);
-                    TimeInfo timeInfo = timeClient.getTime(inetAddress);
-                    long returnTime = timeInfo.getMessage().getTransmitTimeStamp().getTime();
-
-                    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
-                    Date time = new Date(returnTime);
-                    System.out.println(time);
-                    String ipAddress = request.getHeader("X-FORWARDED-FOR");
-                    if (ipAddress == null) {
-                        ipAddress = request.getRemoteAddr();
-                    }
-                %>
+  
                 
                 
   		<div class = "container-fluid box">
@@ -47,7 +33,7 @@
   				<div class="col-sm-offset-4 col-sm-4">
   				<h1 class="text-center">Login</h1>
   				<form action="LoginService" method="POST">
-                        <input type='hidden' value=<%=ipAddress%> name='client_add' >
+                        
   					<div class="form-group login">
 	  					<select name="role" required class="form-control">
 	                        <option value="">Please choose a category</option>
@@ -64,7 +50,7 @@
   						<br>
   						<div class="text-center">
   						<button type="submit" class=" btn btn-info">Submit</button>	</div>
-  						<div class="forgot"><a href="accounts/forgot_password.jsp">Forgot your password?</a></div>
+  						<div class="forgot"><a href="account/forgot_password_request.jsp">Forgot your password?</a></div>
                   
   					</div>
   					</form>

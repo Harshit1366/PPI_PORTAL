@@ -27,14 +27,14 @@
       
       <ul class="nav navbar-nav navbar-right">
      <li><a href="#"><%=session.getAttribute("user").toString().toUpperCase()%></a></li>
-      <li><a href="../logout"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
+      <li><a href="../account/logout.jsp"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
     </ul>
     
   </div>
 </nav>
        
       
-      
+      <a href="../account/change_password.jsp">Change Password</a>
              <!-- Sidebar -->
              
         <div id="sidebar_collapse" style="background-color: lightblue;margin-top: 100px"  class="col-sm-3 col-lg-2 sidebar collapse in">

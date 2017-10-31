@@ -13,8 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import com.ppi.constants.LoginStatus;
 import com.ppi.constants.Redirect;
-import com.ppi.impl.LoginObjs;
-
+import com.ppi.impl.LoginIMPL;
 
 /**
  * Servlet implementation class LoginService
@@ -50,7 +49,7 @@ public class LoginService extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		PrintWriter writer = response.getWriter();
-		LoginObjs ldao = new LoginObjs();
+		LoginIMPL ldao = new LoginIMPL();
 		try {
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
@@ -88,7 +87,7 @@ public class LoginService extends HttpServlet {
 		} 
 		catch (IllegalArgumentException | NullPointerException e) {
 			e.printStackTrace();
-			writer.println(returnScript("Blank Feilds Found","index.jsp"));
+			writer.println(returnScript("Blank Feilds Found","login.jsp"));
 			return;
 		} catch (Exception e) {
 			e.printStackTrace();
