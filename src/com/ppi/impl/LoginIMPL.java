@@ -22,7 +22,7 @@ import com.ppi.model.Login;
 
 
 
-public class LoginObjs {
+public class LoginIMPL {
 
 	public String getNewPassword(){
 

@@ -53,12 +53,12 @@ public class Login {
 	
 	/**
 	 * @param username
-	 * @param password
+	 * @param PASSWORD
 	 * @param role
 	 * @param status
 	 * @param salt
 	 * @param name
-	 * @param email
+	 * @param EMAIL
 	 * @param contact
 	 */
 	public Login(Login login) {

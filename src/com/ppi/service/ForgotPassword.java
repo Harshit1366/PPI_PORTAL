@@ -1,26 +1,28 @@
 package com.ppi.service;
 
 import java.io.IOException;
+import java.net.URL;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ppi.impl.EmailService;
 import com.ppi.impl.LoginIMPL;
-import com.ppi.model.Login;
 
 /**
- * Servlet implementation class addExpert
+ * Servlet implementation class ForgotPassword
  */
-@WebServlet("/add")
-public class add extends HttpServlet {
+@WebServlet("/ForgotPassword")
+public class ForgotPassword extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public add() {
+    public ForgotPassword() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,20 +40,16 @@ public class add extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//doGet(request, response);
-		
-		Login login=new Login();
-		
-		login.setUsername(request.getParameter("user"));
-		login.setPassword(request.getParameter("pass"));
-		login.setRole(request.getParameter("role"));
-		login.setStatus(request.getParameter("status"));
-		
-		LoginIMPL l=new LoginIMPL();
-		l.saveNewLogin(login);
-		
-		response.sendRedirect("admin/admin_home.jsp");
-		
+		LoginIMPL dao = new LoginIMPL();
+		String username = request.getParameter("username");
+		String token = dao.forgotRequest(username);
+		String link = "http://localhost:8080/PPI1/account/forgot_password_response.jsp?token="+token;
+		String to = dao.getEmailByUsername(username);
+		EmailService.sendEmail("NCU: Forgot Password", link, to);
+		URL url = new URL(link);
+		System.out.println(url);
+		response.sendRedirect("login.jsp");
+		return;
 	}
 
 }
