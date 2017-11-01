@@ -4,6 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.DecimalFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,6 +27,7 @@ import com.ppi.model.ExpSkills;
 public class PieChart extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	int team=0,enth=0,conf=0,clean=0,oral=0,lang=0,prob=0,skill=0,total=0;
+	String i,j,k,l,m,n,o,p;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -76,15 +78,27 @@ public class PieChart extends HttpServlet {
 		float g = ((float)prob/total*100);
 		float h = ((float)skill/total*100);
 		
+
+		DecimalFormat df = new DecimalFormat();
+		df.setMaximumFractionDigits(2);
+		i=df.format(a);
+		j=df.format(b);
+		k=df.format(c);
+		l=df.format(d);
+		m=df.format(e);
+		n=df.format(f);
+		o=df.format(g);
+		p=df.format(h);
+		
 		DefaultPieDataset dataset = new DefaultPieDataset();
-		dataset.setValue("TEAM SPIRIT ("+a+" %)", team);
-		dataset.setValue("ENTHUSIASM ("+b+" %)", enth);
-		dataset.setValue("SELF CONFIDENCE ("+c+" %)", conf);
-		dataset.setValue("CLEANLINESS ("+d+" %)", clean);
-		dataset.setValue("ORAL COMMUNICATION ("+e+" %)", oral);
-		dataset.setValue("BODY LANGUAGE ("+f+" %)", lang);
-		dataset.setValue("PROBLEM SOLVING ("+g+" %)", prob);
-		dataset.setValue("ANALYTICAL SKILL ("+h+" %)", skill);
+		dataset.setValue("TEAM SPIRIT ("+i+" %)", team);
+		dataset.setValue("ENTHUSIASM ("+j+" %)", enth);
+		dataset.setValue("SELF CONFIDENCE ("+k+" %)", conf);
+		dataset.setValue("CLEANLINESS ("+l+" %)", clean);
+		dataset.setValue("ORAL COMMUNICATION ("+m+" %)", oral);
+		dataset.setValue("BODY LANGUAGE ("+n+" %)", lang);
+		dataset.setValue("PROBLEM SOLVING ("+o+" %)", prob);
+		dataset.setValue("ANALYTICAL SKILL ("+p+" %)", skill);
 
 		boolean legend = true;
 		boolean tooltips = false;

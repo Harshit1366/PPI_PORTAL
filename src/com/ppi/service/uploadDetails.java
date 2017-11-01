@@ -73,7 +73,7 @@ public class uploadDetails extends HttpServlet {
                    String x = null,y = null;
                    
 
-                   System.out.println(expert);
+                   //System.out.println(expert);
                    
                    a=roll.length;
                    
@@ -82,10 +82,10 @@ public class uploadDetails extends HttpServlet {
                    c=a/b;
                    d=a%b;
                    
-                   System.out.println("a : "+a);
-                   System.out.println("b : "+b);
-                   System.out.println("c : "+c);
-                   System.out.println("d : "+d);
+//                   System.out.println("a : "+a);
+//                   System.out.println("b : "+b);
+//                   System.out.println("c : "+c);
+//                   System.out.println("d : "+d);
 
                    int k=0;
                   
@@ -95,12 +95,12 @@ public class uploadDetails extends HttpServlet {
                     		   for(int i=0;i<b;i++){
                                
                                if(k!=a){
-                            	   System.out.println("k : "+(k+1));                             	   
+                            	   //System.out.println("k : "+(k+1));                             	   
                             	   x=(String) expert.get(i);
-                            	   System.out.println("x : "+x);
+                            	   //System.out.println("x : "+x);
 
                             	   y=roll[k];
-                            	   System.out.println("y : "+y);
+                            	   //System.out.println("y : "+y);
                            		
                       				Ppi p=new Ppi();
                       				p.setExpert(x);
@@ -119,13 +119,13 @@ public class uploadDetails extends HttpServlet {
 
                 		   for(int i=0;i<d;i++){
                            
-                           System.out.println("k : "+(k+1));  
+                           //System.out.println("k : "+(k+1));  
                                           	   
                         	   x=(String)expert.get(i);
-                        	   System.out.println("x : "+x);
+                        	   //System.out.println("x : "+x);
 
                         	   y=roll[k];
-                        	   System.out.println(y);
+                        	   //System.out.println(y);
 
                         	   
                         	   Ppi p=new Ppi();
@@ -140,23 +140,6 @@ public class uploadDetails extends HttpServlet {
                 	   
             		   
            	   }
-                	   Iterator<Ppi> itr=list.iterator();
-
-                	    while(itr.hasNext())
-                	    {
-                	        Ppi p = itr.next();
-
-                	        System.out.print("expert:"+p.getExpert());
-                	        System.out.print("  Stud:"+p.getRoll());
-                	        System.out.println("  Assign:"+p.getAssign());
-                	        
-                	    }
-
-                	    
-                        //sess.setAttribute("list",list);
-
-                	   
-                   
 
         	Iterator<Ppi> itr2=list.iterator();
 
@@ -167,12 +150,12 @@ public class uploadDetails extends HttpServlet {
        		       ps=con.prepareStatement(sql);
            		   ps.setString(1,p.getExpert());
                    ps.setString(2,p.getRoll());
-                   System.out.println(ps.executeUpdate());
+                   //System.out.println(ps.executeUpdate());
                    String sql2 = "update records set ppi_assigned = ? where rno = ?";
            		   ps2=con.prepareStatement(sql2);
            		   ps2.setInt(1, p.getAssign());
            		   ps2.setString(2, p.getRoll());
-           		   System.out.println(ps2.executeUpdate());
+           		   //System.out.println(ps2.executeUpdate());
 
                    }
   

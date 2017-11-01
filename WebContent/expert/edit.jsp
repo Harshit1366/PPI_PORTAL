@@ -31,10 +31,27 @@
 }
 .nav-tabs > li.active {
     margin-bottom: -1px;    
-}</style>
-     
+}</style>     
     </head>
+<input type="hidden" id="refreshed" value="no">
+<script type="text/javascript"> 
+onload = function() 
+{ 
+	var e = document.getElementById("refreshed"); 
+    if (e.value == "no") 
+	e.value = "yes"; 
+	else
+	{
+    e.value = "no"; 
+	location.reload(); 
+	} 
+	} 
+	</script>
     <body background="images/e.jpg">
+    <%  if(request.getSession().getAttribute("sid")==null){
+            response.sendRedirect("../login.jsp");
+            return;
+        }%>
        <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -47,7 +64,7 @@
     </ul>
       <ul class="nav navbar-nav navbar-right">
       <li><a href="#"><%=session.getAttribute("user").toString().toUpperCase()%></a></li>
-      <li><a href="../logout"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
+      <li><a href="../account/logout.jsp"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
     </ul>
     
   </div>
@@ -80,7 +97,14 @@
 
             <ul class="nav menu" style="margin-top: 0px">
              <c:forEach items="${expert1}" var="studs">
-             <li><a href="expert.jsp?roll=${studs.roll}&name=${studs.name}">${studs.name}</a></li>
+              <li>
+             <form method="post" action="../expert/expert.jsp">
+             <input type="hidden" value="<c:out value="${studs.roll}"/>" name="roll"/>
+             <input type="hidden" value="<c:out value="${studs.name}"/>" name="name"/>
+             <input type="submit" value="${studs.name}">
+             </form>
+             </li>
+<%--              <li><a href="expert.jsp?roll=${studs.roll}&name=${studs.name}">${studs.name}</a></li> --%>
 		</c:forEach>   
              
     </ul>
@@ -90,7 +114,14 @@
 
             <ul class="nav menu" style="margin-top: 10px">
             <c:forEach items="${expert2}" var="studs">
-             <li><a href="edit.jsp?roll=${studs.roll}">${studs.name} <span class="glyphicon glyphicon-edit"></span></a></li>
+            <li>
+            <form method="post" action="../expert/edit.jsp">
+             <input type="hidden" value="<c:out value="${studs.roll}"/>" name="roll"/>
+             <input type="hidden" value="<c:out value="${studs.name}"/>"  name="name"/>
+             <input type="submit" value="${studs.name}"> <span class="glyphicon glyphicon-edit"></span>
+             </form>
+             </li>
+<%--              <li><a href="edit.jsp?roll=${studs.roll}">${studs.name} <span class="glyphicon glyphicon-edit"></span></a></li> --%>
 		</c:forEach> 
 
     </ul>
@@ -104,14 +135,14 @@
     <li><a data-toggle="tab" href="#stud_skills">Student Skills</a></li>  
     <li><a data-toggle="tab" href="#stud_remarks">Student Remarks</a></li>    
   </ul>  
-  
+    <%if(request.getParameter("roll")!=null){%> 
   <form class="form-horizontal" role="form" action="../EditDetails" method="post">
   <div class="tab-content">  
     <div id="stud_knowledge" class="tab-pane fade in active">  
  <div class="container">
        <div class="row" >
 
-                <div class="col-sm-4 col-sm-offset-4" style="background-color: rgba(255,255,255,0);border-radius: 10px;">
+                <div class="col-sm-4 col-sm-offset-0" style="background-color: rgba(255,255,255,0);border-radius: 10px;">
       
                         
                         <div class="form-group">
@@ -123,11 +154,7 @@
                             <label for="rno" class="control-label">Roll No.</label>
                             <input type="text" class="form-control" readonly id="rno" value='<%=k.getRoll()%>' name="rno" required placeholder="Enter Student Roll. No.">
                         </div>
-                        
-                        
-                        
-                        
-                        
+            
                            <table class = "table table-bordered">
 		    							<thead>
 		    								<tr>
@@ -229,7 +256,7 @@
     </div>  
 
     <div id="stud_skills" class="tab-pane fade">  
-          <div class="col-sm-4 col-sm-offset-4" style="background-color: rgba(255,255,255,0);border-radius: 10px;">
+          <div class="col-sm-4 col-sm-offset-0" style="background-color: rgba(255,255,255,0);border-radius: 10px;">
                         
                         <div class="form-group">
                             <label for="name" class="control-label">Name</label>
@@ -239,11 +266,7 @@
                             <label for="rno" class="control-label">Roll. No.</label>
                             <input type="text" readonly value='<%=s.getRoll()%>'  class="form-control" id="rno" name="rno" required placeholder="Enter Student Roll. No.">
                         </div>
-                        
-                        
-                        
-                        
-                        
+      
                         
                         
                           <table class = "table table-bordered">
@@ -356,7 +379,7 @@
                 <br><br>
                
                 
-                <div class="col-sm-4 col-sm-offset-4" style="background-color: rgba(255,255,255,0);border-radius: 10px;">
+                <div class="col-sm-4 col-sm-offset-0" style="background-color: rgba(255,255,255,0);border-radius: 10px;">
        
                         
                           <div class="form-group">
@@ -381,6 +404,7 @@
   
   </div>  
    </form>
+   <%} %>
 </div>  
    </div>
 </div>

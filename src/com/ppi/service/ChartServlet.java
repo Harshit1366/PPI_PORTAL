@@ -4,6 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.DecimalFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,7 +26,8 @@ import com.ppi.model.ExpKnowledge;
 @WebServlet("/ChartServlet")
 public class ChartServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	int data=0,logic=0,cao=0,dbms=0,os=0,cn=0,app=0,total=0;       
+	int data=0,logic=0,cao=0,dbms=0,os=0,cn=0,app=0,total=0;  
+	String h,i,j,k,l,m,n;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -73,14 +75,24 @@ public class ChartServlet extends HttpServlet {
 		float f = ((float)cn/total*100);
 		float g = ((float)app/total*100);
 		
+		DecimalFormat df = new DecimalFormat();
+		df.setMaximumFractionDigits(2);
+		h=df.format(a);
+		i=df.format(b);
+		j=df.format(c);
+		k=df.format(d);
+		l=df.format(e);
+		m=df.format(f);
+		n=df.format(g);
+		
 		DefaultPieDataset dataset = new DefaultPieDataset();
-		dataset.setValue("DATA STRUCTURE ("+a+" %)", data);
-		dataset.setValue("LOGIC BUILDING ("+b+" %)", logic);
-		dataset.setValue("COMPUTER ARCHITECTURE & ORGANISATION ("+c+" %)", cao);
-		dataset.setValue("DATABASE MANAGEMENT SYSTEM ("+d+" %)", dbms);
-		dataset.setValue("OPERATING SYSTEM ("+e+" %)", os);
-		dataset.setValue("COMPUTER NETWORK ("+f+" %)", cn);
-		dataset.setValue("APPLICATION DEVELOPMENT ("+g+" %)", app);
+		dataset.setValue("DATA STRUCTURE ("+h+" %)", data);
+		dataset.setValue("LOGIC BUILDING ("+i+" %)", logic);
+		dataset.setValue("COMPUTER ARCHITECTURE & ORGANISATION ("+j+" %)", cao);
+		dataset.setValue("DATABASE MANAGEMENT SYSTEM ("+k+" %)", dbms);
+		dataset.setValue("OPERATING SYSTEM ("+l+" %)", os);
+		dataset.setValue("COMPUTER NETWORK ("+m+" %)", cn);
+		dataset.setValue("APPLICATION DEVELOPMENT ("+n+" %)", app);
 
 		boolean legend = true;
 		boolean tooltips = false;

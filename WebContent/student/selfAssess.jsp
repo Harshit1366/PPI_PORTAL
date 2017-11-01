@@ -32,7 +32,25 @@
 }</style>
      
     </head>
+<input type="hidden" id="refreshed" value="no">
+<script type="text/javascript"> 
+onload = function() 
+{ 
+	var e = document.getElementById("refreshed"); 
+    if (e.value == "no") 
+	e.value = "yes"; 
+	else
+	{
+    e.value = "no"; 
+	location.reload(); 
+	} 
+	} 
+	</script>
     <body background="images/e.jpg">
+    <%  if(request.getSession().getAttribute("sid")==null){
+            response.sendRedirect("../login.jsp");
+            return;
+        }%>
        <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -45,7 +63,7 @@
     </ul>
       <ul class="nav navbar-nav navbar-right">
       <li><a href="#"><%=session.getAttribute("user").toString().toUpperCase()%></a></li>
-      <li><a href="../logout"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
+      <li><a href="../account/logout.jsp"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
     </ul>
     
   </div>
@@ -57,7 +75,7 @@
 
             <ul class="nav menu" style="margin-top: 10px">
              
-                <li id="score"><a href="../PDFGenerator"><span class="glyphicon glyphicon-book"></span> Your Score</a></li>
+                <li id="score"><a href="../PPIScore"><span class="glyphicon glyphicon-book"></span> Your Score</a></li>
                 <li id="cv"><a href="../DownloadCV"><span class="glyphicon glyphicon-file"></span> Download CV Format</a></li>
                 <%if(RecordsIMPL.getAssess(session.getAttribute("user").toString())==1){ %>               
                 <li id="pdf"><a href="../PDF_SelfSheet"><span class="glyphicon glyphicon-comment"></span> Self-Assessment PDF</a></li>

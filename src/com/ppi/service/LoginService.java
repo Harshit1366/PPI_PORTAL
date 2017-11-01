@@ -59,11 +59,11 @@ public class LoginService extends HttpServlet {
 				throw new IllegalArgumentException();
 			}
 			LoginStatus ls = ldao.validateLogin(username, password, role);
-			System.out.println(ls);
+			//System.out.println(ls);
 			if (ls == LoginStatus.SUCCESS) {
 				HttpSession sess = request.getSession();
 				String sid = generateSessionID();
-				System.out.println(sid);
+				//System.out.println(sid);
 				sess.setAttribute("sid", sid);
 				sess.setAttribute("user", username);
 				if(ldao.insertSessionID(username, sess.getAttribute("sid").toString())){

@@ -68,7 +68,7 @@ public class UploadServlet extends HttpServlet {
 				} catch (Exception e) {
 
 				}
-				System.out.println(items);
+				//System.out.println(items);
 				Iterator<?> itr = items.iterator();
 				while (itr.hasNext()) {
 					FileItem item = (FileItem) itr.next();
@@ -77,13 +77,13 @@ public class UploadServlet extends HttpServlet {
 					} else  {
 						
 						String itemname = item.getName();
-						System.out.println(item);
+						//System.out.println(item);
 						if ((itemname == null) || itemname.equals("")) {
 							continue;
 						}
 						String filename = FilenameUtils.getName(itemname);
 						f = checkExist(filename);
-						System.out.println(f.getAbsolutePath());
+						//System.out.println(f.getAbsolutePath());
  	                   String ext=itemname.substring(itemname.lastIndexOf('.')+1);
  	           if ((ext.equalsIgnoreCase("txt"))||(ext.equalsIgnoreCase("doc"))||(ext.equalsIgnoreCase("docx"))|| (ext.equalsIgnoreCase("xlsx")) || (ext.equalsIgnoreCase("pdf"))){
  	                   tosave=new File("C:/xampp/tomcat/work/NCUPPI/",itemname);

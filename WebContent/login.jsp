@@ -16,6 +16,20 @@
 			@import url('https://fonts.googleapis.com/css?family=Lora');
 		</style>
   	</head>
+<input type="hidden" id="refreshed" value="no">
+<script type="text/javascript"> 
+onload = function() 
+{ 
+	var e = document.getElementById("refreshed"); 
+    if (e.value == "no") 
+	e.value = "yes"; 
+	else
+	{
+    e.value = "no"; 
+	location.reload(); 
+	} 
+	} 
+	</script>
   	<body>
   		<header>
 	  		<div class="jumbotron" id="orange"></div>
@@ -23,11 +37,7 @@
 	  		<h2>The NorthCap University</h2>
 	  		</div>
   		</header>
-  		
-  	
-  
-                
-                
+       
   		<div class = "container-fluid box">
   			<div class="row">
   				<div class="col-sm-offset-4 col-sm-4">

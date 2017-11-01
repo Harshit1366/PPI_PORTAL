@@ -35,7 +35,7 @@ public class DownloadCV extends HttpServlet {
 		
 		PrintWriter out = response.getWriter();
 		
-		String filepath = "C:\\Users\\Harshit\\workspace\\PPI1\\WebContent\\form\\CV.doc";   
+		String filepath = "C:\\Users\\Harshit\\workspace\\PPI_PORTAL\\WebContent\\form\\CV.doc";
 		File file = new File(filepath);
 		
 		response.setHeader("Content-Disposition","attachment; filename=\"" + file.getName() + "\"");  

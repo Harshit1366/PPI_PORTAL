@@ -13,7 +13,25 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>  
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> 
     </head>
+<input type="hidden" id="refreshed" value="no">
+<script type="text/javascript"> 
+onload = function() 
+{ 
+	var e = document.getElementById("refreshed"); 
+    if (e.value == "no") 
+	e.value = "yes"; 
+	else
+	{
+    e.value = "no"; 
+	location.reload(); 
+	} 
+	} 
+	</script>
     <body background="images/e.jpg">
+    <%  if(request.getSession().getAttribute("sid")==null){
+            response.sendRedirect("../login.jsp");
+            return;
+        }%>
         <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -26,7 +44,7 @@
       
       <ul class="nav navbar-nav navbar-right">
      <li><a href="#"><%=session.getAttribute("user").toString().toUpperCase()%></a></li>
-      <li><a href="../logout"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
+      <li><a href="../account/logout.jsp"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
     </ul>
     
   </div>
@@ -40,10 +58,9 @@
 
             <ul class="nav menu" style="margin-top: 10px">
              
-                <li id="score"><a href="../PDFGenerator"><span class="glyphicon glyphicon-book"></span> Your Score</a></li>
+                <li id="score"><a href="../PPIScore"><span class="glyphicon glyphicon-book"></span> Your Score</a></li>
                 <li id="cv"><a href="../DownloadCV"><span class="glyphicon glyphicon-file"></span> Download CV Format</a></li>
-                <%if(RecordsIMPL.getAssess(session.getAttribute("user").toString())==1){ %>
-                
+                <%if(RecordsIMPL.getAssess(session.getAttribute("user").toString())==1){ %>              
                 <li id="pdf"><a href="../PDF_SelfSheet"><span class="glyphicon glyphicon-comment"></span> Self-Assessment PDF</a></li>
                 <%} else{
                 %>
@@ -58,7 +75,7 @@
         
         <div class="row">
             <div class="col-sm-4 col-lg-8">     
-             <form class="form-horizontal" role="form" action="feedback.jsp" method="post">
+             <form class="form-horizontal" role="form" action="../UploadFeedback" method="post">
                 <table class="table" style="margin-left: 15px; width:110%">
                             <thead>
                                 <tr class="info">
@@ -126,65 +143,3 @@
         </div>
     </body>
 </html>
-<%
-String r1="",r2="",r3="",r4="",r5="",r6="",r7="";
-if(request.getParameter("submit")!=null)
-   {
-       if(request.getParameter("submit").equals("submit"))
-       {
- r1 = request.getParameter("r1");
- r2 = request.getParameter("r2");
- r3 = request.getParameter("r3");
- r4 = request.getParameter("r4");
- r5 = request.getParameter("r5");
- r6 = request.getParameter("r6");
- r7 = request.getParameter("r7");
- 
- 
- 
- 
-int r11=0,r12=0,r13=0,r14=0,r15=0,r16=0,r17=0;
-
-r11=Integer.parseInt(r1);
-
-r12=Integer.parseInt(r2);
-r13=Integer.parseInt(r3);
-r14=Integer.parseInt(r4);
-r15=Integer.parseInt(r5);
-r16=Integer.parseInt(r6);
-r17=Integer.parseInt(r7);
-
- try{
-           Class.forName("com.mysql.jdbc.Driver");
-           System.out.println("Driver class loaded");
-       }
-       catch(Exception e)
-       {
-          System.out.println(e); 
-       }
-           Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/ppi","root","pass");
-           System.out.println("Connection object created");
-       
-         
-       String id= session.getAttribute( "Name" ).toString();
-                PreparedStatement ps;
-               ps=con.prepareStatement("insert into feedback values(?,?,?,?,?,?,?,?)");
-           ps.setString(1,id);
-           ps.setInt(2,r11);
-           ps.setInt(3,r12);
-           ps.setInt(4,r13);
-           ps.setInt(5,r14);
-           ps.setInt(6,r15);
-           ps.setInt(7,r16);
-           ps.setInt(8,r17);
-           ps.executeUpdate();
-             
-          
-       con.close();
-       response.sendRedirect("feedback.jsp");
- 
-       }
-   }
-
-      
-%>

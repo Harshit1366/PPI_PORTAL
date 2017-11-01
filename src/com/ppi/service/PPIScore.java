@@ -14,13 +14,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.itextpdf.text.BaseColor;
+//import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
@@ -38,14 +39,14 @@ import com.ppi.model.StudExpert;
 /**
  * Servlet implementation class PDFGenerator
  */
-@WebServlet("/PDFGenerator")
-public class PDFGenerator extends HttpServlet {
+@WebServlet("/PPIScore")
+public class PPIScore extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public PDFGenerator() {
+    public PPIScore() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -78,6 +79,7 @@ public class PDFGenerator extends HttpServlet {
 		
 		HttpSession sess = request.getSession(false);
 		String id=sess.getAttribute("user").toString();
+		//String id="15csu057";
 		
 		StudExpert se = new StudExpert();
 		
@@ -112,80 +114,68 @@ public class PDFGenerator extends HttpServlet {
              document.open();
              document.add(rect);
              document.add(rect2);
-	         //document.open();
-//	         Rectangle rect = new Rectangle(15, 15, 580, 820);
-//	         Rectangle rect2 = new Rectangle(17, 17, 578, 818);
-//	         rect.setBorder(Rectangle.BOX);
-//	         rect.setBorderWidth(0.5f);
-//	         rect2.setBorder(Rectangle.BOX);
-//	         rect2.setBorderWidth(0.5f);
-//	         document.add(rect);
-//	         document.add(rect2);
              
+             Image img = Image.getInstance("C://Users//Harshit//workspace//PPI_PORTAL//WebContent//images//ncu.png");
+             img.scaleToFit(100f, 100f);
+             
+             document.add(img);
              
         	 Font tableHeader
                      = FontFactory.getFont(FontFactory.HELVETICA, 13, Font.BOLD);
-
-
-	         
-	         Font boldFont = new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD);         
+         
+	         Font boldFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);         
 	         PdfPTable th = new PdfPTable(1);
 	         PdfPCell in1= new PdfPCell();
-	         Phrase firstLine = new Phrase("The NorthCap University\nPPI EVALUATION RESULT", boldFont );     
-	         in1.addElement(firstLine );
+	         Phrase firstLine = new Phrase("\t\t\t\t                                 The NorthCap University\n"
+	         		+ "                                   PPI EVALUATION RESULT", boldFont );     
+	         //in1.addElement(firstLine );
+	         document.add(firstLine);
+	       
 	         in1.setBorder(2);
-	         //in1.setBackgroundColor(BaseColor.BLUE);
-	         in1.setBorderColor(BaseColor.BLUE);
-	         in1.setPadding(7);
-		     in1.setHorizontalAlignment(Element.ALIGN_CENTER);
-			 in1.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			 
-			 
+
 			 th.addCell(in1);
 
 	         document.add(th);
-	         
-	         document.add( Chunk.NEWLINE );
-	         document.add( Chunk.NEWLINE );
 
-	         document.add(new Paragraph("     Student & Expert Details :", tableHeader));
+
+	         document.add(new Paragraph("\n\n     Student & Expert Details :", tableHeader));
 	         document.add(new Paragraph());
 
 	         document.add( Chunk.NEWLINE );
-	         
 
 	         
-	         Font headerFont= FontFactory.getFont(FontFactory.HELVETICA, 14, Font.BOLDITALIC);
+	         Font headerFont= FontFactory.getFont(FontFactory.HELVETICA, 12, Font.BOLD);
+	         Font headerFont2= FontFactory.getFont(FontFactory.HELVETICA, 12, Font.BOLD);
 	         
 	         PdfPTable table1 = new PdfPTable(2); 
-	            PdfPCell cell1 = new PdfPCell(new Paragraph("Name Of Expert",headerFont));
-				cell1.setBorderColor(BaseColor.BLUE);
-	            cell1.setPadding(7);
+	            PdfPCell cell1 = new PdfPCell(new Paragraph("NAME OF EXPERT",headerFont));
+				//cell1.setBorderColor(BaseColor.BLUE);
+	            cell1.setPadding(5);
 				cell1.setHorizontalAlignment(Element.ALIGN_CENTER);
 				cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				PdfPCell cell2 = new PdfPCell(new Paragraph(se.getExpert().toUpperCase(),headerFont));
-				cell2.setBorderColor(BaseColor.BLUE);
-	            cell2.setPadding(7);
+				PdfPCell cell2 = new PdfPCell(new Paragraph(se.getExpert().toUpperCase(),headerFont2));
+				//cell2.setBorderColor(BaseColor.BLUE);
+	            cell2.setPadding(5);
 				cell2.setHorizontalAlignment(Element.ALIGN_CENTER);
 				cell2.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				PdfPCell cell3 = new PdfPCell(new Paragraph("Name Of Student",headerFont));
-				cell3.setBorderColor(BaseColor.BLUE);
-	            cell3.setPadding(7);
+				PdfPCell cell3 = new PdfPCell(new Paragraph("NAME OF STUDENT",headerFont));
+				//cell3.setBorderColor(BaseColor.BLUE);
+	            cell3.setPadding(5);
 				cell3.setHorizontalAlignment(Element.ALIGN_CENTER);
 				cell3.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				PdfPCell cell4 = new PdfPCell(new Paragraph(se.getStudent().toUpperCase(),headerFont));
-				cell4.setBorderColor(BaseColor.BLUE);
-	            cell4.setPadding(7);
+				PdfPCell cell4 = new PdfPCell(new Paragraph(se.getStudent().toUpperCase(),headerFont2));
+				//cell4.setBorderColor(BaseColor.BLUE);
+	            cell4.setPadding(5);
 				cell4.setHorizontalAlignment(Element.ALIGN_CENTER);
 				cell4.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				PdfPCell cell5 = new PdfPCell(new Paragraph("Roll No",headerFont));
-				cell5.setBorderColor(BaseColor.BLUE);
-	            cell5.setPadding(7);
+				PdfPCell cell5 = new PdfPCell(new Paragraph("ROLL NO",headerFont));
+				//cell5.setBorderColor(BaseColor.BLUE);
+	            cell5.setPadding(5);
 				cell5.setHorizontalAlignment(Element.ALIGN_CENTER);
 				cell5.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				PdfPCell cell6 = new PdfPCell(new Paragraph(se.getRoll().toUpperCase(),headerFont));
-				cell6.setBorderColor(BaseColor.BLUE);
-	            cell6.setPadding(7);
+				PdfPCell cell6 = new PdfPCell(new Paragraph(se.getRoll().toUpperCase(),headerFont2));
+				//cell6.setBorderColor(BaseColor.BLUE);
+	            cell6.setPadding(5);
 				cell6.setHorizontalAlignment(Element.ALIGN_CENTER);
 				cell6.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				
@@ -204,11 +194,6 @@ public class PDFGenerator extends HttpServlet {
 	         table1.addCell(cell6);
 	         document.add(table1);
 
-	         document.add( Chunk.NEWLINE );
-	         
-	         
-	         
-	
      Font tableHeader2
              = FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD);
 
@@ -278,33 +263,33 @@ public class PDFGenerator extends HttpServlet {
              document.add(p5);
              document.add(new Paragraph("\n"));
              document.add(table3);
+//             document.add(rect);
+//             document.add(rect2);
+             document.add(new Paragraph(""));
+	         
              document.add(rect);
              document.add(rect2);
-             document.add(new Paragraph("\n\n"));
-
-	         
-	         document.add( Chunk.NEWLINE );
+             img.scaleToFit(100f, 100f);
+             document.add(img);
+             document.add(firstLine);
+             //th.addCell(in1);
+             document.add(th);
 	 
 
 	         DateFormat df = new SimpleDateFormat("dd/MM/yy");
 	         Date dateobj = new Date();
 	         
-	         document.add(new Paragraph("C.\t Student Remarks :",tableHeader));
+	         document.add( Chunk.NEWLINE );
 	         document.add( Chunk.NEWLINE );
 	         
-	        PdfPTable itable4 = new PdfPTable(1);  
-	     	PdfPCell cell41 = new PdfPCell(new Paragraph(r.getRemarks()));
-			cell41.setBorderColor(BaseColor.BLUE);
-	        cell41.setPadding(7);
-			cell41.setHorizontalAlignment(Element.ALIGN_CENTER);
-			cell41.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			itable4.addCell(cell41);
-			document.add(itable4);
-
+	         document.add(new Paragraph("C.\t Student Remarks : ",tableHeader));
+	         
+	         document.add(new Paragraph("\t   "+r.getRemarks()));
+	         
 	         document.add(Chunk.NEWLINE);
 	         document.add(new Paragraph("\n\t\t\tDate : " + df.format(dateobj)));
 	         
-	         Paragraph p8 = new Paragraph("\n\n\n        *****");
+	         Paragraph p8 = new Paragraph("\n\n\n     *****");
              p8.setAlignment(Element.ALIGN_CENTER);
              document.add(p8);
 

@@ -113,7 +113,7 @@ public class AssignService extends HttpServlet {
 				} catch (Exception e) {
 
 				}
-				System.out.println(items);
+				//System.out.println(items);
 				Iterator<?> itr = items.iterator();
 				while (itr.hasNext()) {
 					FileItem item = (FileItem) itr.next();
@@ -121,20 +121,20 @@ public class AssignService extends HttpServlet {
 						
 						String form_value_name = item.getFieldName();
 						String form_value_value = item.getString();
-						System.out.println("FORM DATA:" + form_value_name + " " + form_value_value);
+						//System.out.println("FORM DATA:" + form_value_name + " " + form_value_value);
 						formdata.add(new String[]{form_value_name, form_value_value});
 						
 						int i=1;
 						
-						System.out.println(formdata.size());
+						//System.out.println(formdata.size());
 						for(String[] s:formdata){
 							if(i==1){
 								sess.setAttribute("no", s[1]);
-								System.out.println("no:"+s[1]);
+								//System.out.println("no:"+s[1]);
 							}
 							else if(i==2){
 								sess.setAttribute("date", s[1]);
-								System.out.println("date:"+s[1]);
+								//System.out.println("date:"+s[1]);
 							}
 							else{
 								break;
@@ -148,16 +148,16 @@ public class AssignService extends HttpServlet {
 					} else  {
 						
 						String itemname = item.getName();
-						System.out.println(item);
+						//System.out.println(item);
 						if ((itemname == null) || itemname.equals("")) {
 							continue;
 						}
 						String filename = FilenameUtils.getName(itemname);
 						f = checkExist(filename);
-						System.out.println("Path:"+f.getAbsolutePath());
+						//System.out.println("Path:"+f.getAbsolutePath());
 						item.write(f);
 //						sess.setAttribute("file", f.getAbsolutePath());
-						System.out.println("Location of file :"+f.getName());
+						//System.out.println("Location of file :"+f.getName());
 						
 					}
 				}
@@ -179,20 +179,20 @@ public class AssignService extends HttpServlet {
               Cell cell = sheet.getRow(i).getCell(0);
               String name = formatter.formatCellValue(cell);
               
-               Cell cell1 = sheet.getRow(i).getCell(1);
-              String id = formatter.formatCellValue(cell1);
+//              Cell cell1 = sheet.getRow(i).getCell(1);
+//              String id = formatter.formatCellValue(cell1);
+//              
+//              Cell cell2 = sheet.getRow(i).getCell(2);
+//              String pass = formatter.formatCellValue(cell2);
               
-              Cell cell2 = sheet.getRow(i).getCell(2);
-              String pass = formatter.formatCellValue(cell2);
-              
-              System.out.println("Name : "+name+" \tId : "+id+"\t Password : "+pass);
+              //System.out.println("Name : "+name+" \tId : "+id+"\t Password : "+pass);
               
               expert.add(name);
               
 //              String sql = "INSERT INTO EXPERT_LOGIN VALUES('"+name+"','"+id+"','"+pass+"')";
 //              pstm = con.prepareStatement(sql);
 //              pstm.execute();
-              System.out.println("Import rows "+i);
+              //System.out.println("Import rows "+i);
           }
           sess.setAttribute("experts",expert);
           file.close();

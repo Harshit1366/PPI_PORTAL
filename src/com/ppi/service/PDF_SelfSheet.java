@@ -76,13 +76,9 @@ public class PDF_SelfSheet extends HttpServlet {
     }
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		
+				
 		HttpSession sess = request.getSession(false);
 		String id=sess.getAttribute("user").toString();
-
-        //String id="15csu065";
 		
 		StudExpert se = new StudExpert();
 		
@@ -121,7 +117,7 @@ public class PDF_SelfSheet extends HttpServlet {
 
                 DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 Date date = new Date();
-                System.out.println(dateFormat.format(date));
+                //System.out.println(dateFormat.format(date));
 
                 Font headerFont
                         = FontFactory.getFont(FontFactory.HELVETICA, 14, Font.BOLDITALIC);
@@ -138,7 +134,7 @@ public class PDF_SelfSheet extends HttpServlet {
                 Font tableHeader2
                         = FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD);
 
-                Paragraph p4 = new Paragraph("A. Attitude. (On scale of 1-5)", tableHeader);
+                Paragraph p4 = new Paragraph("A. Attitude. ", tableHeader);
                 
                 
                 PdfPTable table1 = new PdfPTable(2);
@@ -185,7 +181,7 @@ public class PDF_SelfSheet extends HttpServlet {
                 table1.addCell("Cleanliness");
                 table1.addCell(getStatus(Integer.valueOf(a.getCleanliness())));
 
-                Paragraph p5 = new Paragraph("B. Knowlegde. (On scale of 1-5)", tableHeader);
+                Paragraph p5 = new Paragraph("B. Knowlegde. ", tableHeader);
 
                 PdfPTable table2 = new PdfPTable(2);
                 table2.addCell(new Paragraph("Knowledge Parameters", tableHeader2));
@@ -231,7 +227,7 @@ public class PDF_SelfSheet extends HttpServlet {
                 table2.addCell("Enterprise Resource Planning");
                 table2.addCell(getStatus(Integer.valueOf(k.getEnterprise_resource())));
 
-                Paragraph p6 = new Paragraph("C. Skills. (On scale of 1-5)", tableHeader);
+                Paragraph p6 = new Paragraph("C. Skills. ", tableHeader);
 
                 PdfPTable table3 = new PdfPTable(2);
                 table3.addCell(new Paragraph("Skills Parameters", tableHeader2));

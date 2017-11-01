@@ -215,10 +215,10 @@ body {
 
 					</c:if>
 				</div>
-				<img src="../resources/images/ncu logo.png" class="img-responsive"
-					width="300" height="200"> <br>
+				<img src="../images/ncu.png" class="img-responsive"
+					width="350" height="225"> <br>
 				<h4>
-					<strong>Publication Module</strong>
+					<strong>PPI Portal</strong>
 				</h4>
 			</div>
 			<div class="col-md-6 form-group" align="center">
@@ -226,7 +226,7 @@ body {
 				<form method="POST" name="form1" action="../ChangePassword">
 					<table class="table table-borderless">
 						<tr>
-							<td colspan="3">Logged in as:<c:out
+							<td colspan="3">Logged in as :<c:out
 									value="<%=lao.getUsernameBySessionID(request.getSession(false).getAttribute(\"sid\").toString())%>"></c:out>
 							</td>
 						</tr>
@@ -244,7 +244,7 @@ body {
 								name="newPassword1" id="newPassword1" onkeyup='check();'></td>
 						</tr>
 						<tr>
-							<td><label for="password">Again New Password</label></td>
+							<td><label for="password">Confirm New Password</label></td>
 							<td>&nbsp;</td>
 							<td><input class="form-control" type="password"  autocomplete="off" required="required"
 								name="newPassword2" id="newPassword2" onkeyup='check();'>

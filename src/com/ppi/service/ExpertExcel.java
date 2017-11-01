@@ -98,7 +98,7 @@ String savefile = "C:/Users/Harshit/Desktop/new";
 				} catch (Exception e) {
 
 				}
-				System.out.println(items);
+				//System.out.println(items);
 				Iterator<?> itr = items.iterator();
 				while (itr.hasNext()) {
 					FileItem item = (FileItem) itr.next();
@@ -107,15 +107,15 @@ String savefile = "C:/Users/Harshit/Desktop/new";
 					} else  {
 						
 						String itemname = item.getName();
-						System.out.println(item);
+						//System.out.println(item);
 						if ((itemname == null) || itemname.equals("")) {
 							continue;
 						}
 						String filename = FilenameUtils.getName(itemname);
 						f = checkExist(filename);
-						System.out.println("Path:"+f.getAbsolutePath());
+						//System.out.println("Path:"+f.getAbsolutePath());
 						item.write(f);
-						System.out.println("Location of file :"+f.getName());
+						//System.out.println("Location of file :"+f.getName());
 						
 					}
 				}
@@ -139,7 +139,7 @@ String savefile = "C:/Users/Harshit/Desktop/new";
        Cell cell2 = sheet.getRow(i).getCell(2);
        String pass = formatter.formatCellValue(cell2);
        
-       System.out.println("Name : "+name+" \tId : "+id+"\t Password : "+pass);
+       //System.out.println("Name : "+name+" \tId : "+id+"\t Password : "+pass);
 
        Login login=new Login();
 		
@@ -152,7 +152,7 @@ String savefile = "C:/Users/Harshit/Desktop/new";
 	   LoginIMPL l=new LoginIMPL();
 		l.saveNewExpert(login);
        
-       System.out.println("Import rows "+i);
+       //System.out.println("Import rows "+i);
    }
    
    file.close();

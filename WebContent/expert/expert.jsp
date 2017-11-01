@@ -29,9 +29,26 @@
 .nav-tabs > li.active {
     margin-bottom: -1px;    
 }</style>
-     
-    </head>
+</head>
+<input type="hidden" id="refreshed" value="no">
+<script type="text/javascript"> 
+onload = function() 
+{ 
+	var e = document.getElementById("refreshed"); 
+    if (e.value == "no") 
+	e.value = "yes"; 
+	else
+	{
+    e.value = "no"; 
+	location.reload(); 
+	} 
+	} 
+	</script>
     <body background="images/e.jpg">
+    <%  if(request.getSession().getAttribute("sid")==null){
+            response.sendRedirect("../login.jsp");
+            return;
+        }%>
        <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -44,7 +61,7 @@
     </ul>
       <ul class="nav navbar-nav navbar-right">
       <li><a href="#"><%=session.getAttribute("user").toString().toUpperCase()%></a></li>
-      <li><a href="../logout"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
+      <li><a href="../account/logout.jsp"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
     </ul>
     
   </div>
@@ -71,7 +88,14 @@
 
             <ul class="nav menu" style="margin-top: 0px">
              <c:forEach items="${expert1}" var="studs">
-             <li><a href="expert.jsp?roll=${studs.roll}&name=${studs.name}">${studs.name}</a></li>
+             <li>
+             <form method="post" action="../expert/expert.jsp">
+             <input type="hidden" value="<c:out value="${studs.roll}"/>" name="roll"/>
+             <input type="hidden" value="<c:out value="${studs.name}"/>" name="name"/>
+             <input type="submit" value="${studs.name}">
+             </form>
+             </li>
+<%--              <a href="expert.jsp?roll=${studs.roll}&name=${studs.name}">${studs.name}</a></li> --%>
 		</c:forEach>   
              
     </ul>
@@ -81,7 +105,14 @@
 
             <ul class="nav menu" style="margin-top: 10px">
             <c:forEach items="${expert2}" var="studs">
-             <li><a href="edit.jsp?roll=${studs.roll}">${studs.name} <span class="glyphicon glyphicon-edit"></span></a></li>
+            <li>
+            <form method="post" action="../expert/edit.jsp">
+             <input type="hidden" value="<c:out value="${studs.roll}"/>" name="roll"/>
+             <input type="hidden" value="<c:out value="${studs.name}"/>"  name="name"/>
+             <input type="submit" value="${studs.name}"> <span class="glyphicon glyphicon-edit"></span>
+             </form>
+             </li>
+<%--              <li><a href="edit.jsp?roll=${studs.roll}">${studs.name} <span class="glyphicon glyphicon-edit"></span></a></li> --%>
 		</c:forEach> 
 
     </ul>
@@ -95,30 +126,28 @@
     <li><a data-toggle="tab" href="#stud_skills">Student Skills</a></li>  
     <li><a data-toggle="tab" href="#stud_remarks">Student Remarks</a></li>    
   </ul>  
-  
+   <%if(request.getParameter("roll")!=null){%>  
   <form class="form-horizontal" role="form" action="../ExpDetails" method="post">
  
   <div class="tab-content">  
+<!--   <form class="form-horizontal" role="form" action="../Exp" method="post"> -->
     <div id="stud_knowledge" class="tab-pane fade in active">  
  <div class="container">
  
        <div class="row" >
        
 
-                <div class="col-sm-4 col-sm-offset-0" style="background-color: rgba(255,255,255,0);border-radius: 10px;">
-                
-                  
-                     
+                <div class="col-sm-4 col-sm-offset-0" style="background-color: rgba(255,255,255,0);border-radius: 10px;"> 
                         
                         <div class="form-group">
                             <label for="name" class="control-label">Name</label>
-                            <%if(request.getParameter("name")==null){%>
-                            	<input type="text" class="form-control" readonly value=''  id="name" name="name" required placeholder="Enter Student Name">
+                            <%//if(request.getParameter("name")==null){%>
+<!--                             	<input type="text" class="form-control" readonly value=''  id="name" name="name" required placeholder="Enter Student Name"> -->
                             	
-                            <% }else{%>
+                            <%// }else{%>
                             <input type="text" class="form-control" readonly value='<%=request.getParameter("name")%>' id="name" name="name" required placeholder="Enter Student Name">
                         
-                             <%} %>
+                             <%//} %>
                         </div>
                         
                         <div class="form-group">
@@ -142,7 +171,7 @@
 		    								<tr>
 
                                                 <td>Data Structures</td>
-                                                <td><input type = "radio" name="data" class = "form" id="" value="1"></td>
+                                                <td><input type = "radio" name="data" class = "form" id="" value="1" required></td>
 		    									<td><input type = "radio" name="data" class = "form" id="" value="2"></td>
 		    									<td><input type = "radio" name="data" class = "form" id="" value="3"></td>
 		    									<td><input type = "radio" name="data" class = "form" id="" value="4"></td>
@@ -152,7 +181,7 @@
                      
                         <tr>
                        <td>Logic Building</td>
-                                                <td><input type = "radio" class = "form" name="logic" id="" value="1"></td>
+                                                <td><input type = "radio" class = "form" name="logic" id="" value="1" required></td>
 		    									<td><input type = "radio" class = "form" name="logic" id="" value="2"></td>
 		    									<td><input type = "radio" class = "form" name="logic" id="" value="3"></td>
 		    									<td><input type = "radio" class = "form" name="logic" id="" value="4"></td>
@@ -161,7 +190,7 @@
                         <tr>
                        
                          <td>Computer arch. and Organization</td>
-                                                <td><input type = "radio" class = "form" name="cao" id="" value="1"></td>
+                                                <td><input type = "radio" class = "form" name="cao" id="" value="1" required></td>
 		    									<td><input type = "radio" class = "form" name="cao" id="" value="2"></td>
 		    									<td><input type = "radio" class = "form" name="cao" id="" value="3"></td>
 		    									<td><input type = "radio" class = "form" name="cao" id="" value="4"></td>
@@ -169,7 +198,7 @@
                         </tr>
                         <tr>
                          <td>Database Management Systems</td>
-                                                <td><input type = "radio" class = "form" name="dbms" id="" value="1"></td>
+                                                <td><input type = "radio" class = "form" name="dbms" id="" value="1" required></td>
 		    									<td><input type = "radio" class = "form" name="dbms" id="" value="2"></td>
 		    									<td><input type = "radio" class = "form" name="dbms" id="" value="3"></td>
 		    									<td><input type = "radio" class = "form" name="dbms" id="" value="4"></td>
@@ -178,7 +207,7 @@
                      
                        <tr>
                          <td>Operating Systems</td>
-                                                <td><input type = "radio" class = "form" name="os" id="" value="1"></td>
+                                                <td><input type = "radio" class = "form" name="os" id="" value="1" required></td>
 		    									<td><input type = "radio" class = "form" name="os" id="" value="2"></td>
 		    									<td><input type = "radio" class = "form" name="os" id="" value="3"></td>
 		    									<td><input type = "radio" class = "form" name="os" id="" value="4"></td>
@@ -186,7 +215,7 @@
                         </tr>
                         <tr>
                          <td>Computer Networks</td>
-                                                <td><input type = "radio" class = "form" name="cn" id="" value="1"></td>
+                                                <td><input type = "radio" class = "form" name="cn" id="" value="1" required></td>
 		    									<td><input type = "radio" class = "form" name="cn" id="" value="2"></td>
 		    									<td><input type = "radio" class = "form" name="cn" id="" value="3"></td>
 		    									<td><input type = "radio" class = "form" name="cn" id="" value="4"></td>
@@ -196,7 +225,7 @@
                          <tr>
                          
                             <td>Application development using C/C++/PHP/Java</td>
-                                                <td><input type = "radio" class = "form" name="app" id="" value="1"></td>
+                                                <td><input type = "radio" class = "form" name="app" id="" value="1" required></td>
 		    									<td><input type = "radio" class = "form" name="app" id="" value="2"></td>
 		    									<td><input type = "radio" class = "form" name="app" id="" value="3"></td>
 		    									<td><input type = "radio" class = "form" name="app" id="" value="4"></td>
@@ -209,8 +238,9 @@
                         
                         <div class="form-group">
                         
-                       
-                        <a class ="btn btn-primary btn-block" data-toggle="tab" type="submit" href="#stud_skills">Next -></a>
+<!--                        <input type="submit" value="Next ->" data-toggle="tab" href="#stud_skills"> -->
+                        <a class ="btn btn-primary btn-block" data-toggle="tab" type="submit" >Next -></a>
+<!--                         href="#stud_skills" -->
                          
                         </div>
                    
@@ -218,7 +248,7 @@
             </div>
         </div>
     </div>  
-
+<!-- </form> -->
     <div id="stud_skills" class="tab-pane fade">  
           <div class="col-sm-4 col-sm-offset-0" style="background-color: rgba(255,255,255,0);border-radius: 10px;">
                         
@@ -357,6 +387,7 @@
   
   </div>  
    </form>
+   <%} %>
 </div>  
    </div>
 </div>

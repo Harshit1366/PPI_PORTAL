@@ -47,7 +47,7 @@ public class ForgotPassword extends HttpServlet {
 		String to = dao.getEmailByUsername(username);
 		EmailService.sendEmail("NCU: Forgot Password", link, to);
 		URL url = new URL(link);
-		System.out.println(url);
+	    System.out.println(url);
 		response.sendRedirect("login.jsp");
 		return;
 	}

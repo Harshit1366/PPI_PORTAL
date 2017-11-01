@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.ppi.constants.Redirect;
+//import com.ppi.constants.Redirect;
 import com.ppi.database.ConnectionFactory;
 import com.ppi.impl.LoginIMPL;
 import com.ppi.model.Bcrypt;
@@ -58,7 +58,7 @@ public class ChangePassword extends HttpServlet {
 		boolean check1 = newPassword1.matches("^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$");
 		boolean check2 = newPassword2.matches("^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$");
 		
-		System.out.println(oldPassword+ " "+newPassword1 +" "+ newPassword2);
+		//System.out.println(oldPassword+ " "+newPassword1 +" "+ newPassword2);
 		HttpSession sess = request.getSession(false);
 
 		if (null != sess) {
@@ -95,9 +95,9 @@ public class ChangePassword extends HttpServlet {
 				System.out.println(4);
 				throw new NullPointerException();
 			}
-			System.out.println(login);
+			//System.out.println(login);
 			if (!login.getPassword().equals(Bcrypt.hashpw(oldPassword, login.getSalt()))) {
-				System.out.println(5);
+				//System.out.println(5);
 				throw new IllegalArgumentException();
 			}
 			PreparedStatement preparedStatement1 = connection
