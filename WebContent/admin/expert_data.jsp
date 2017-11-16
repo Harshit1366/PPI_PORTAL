@@ -8,10 +8,41 @@
 <title>EXPERT LIST</title>
 <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico"/>
  <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">  
+ <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">  
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/admin.css">     
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>  
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> 
+  <script src="jquery.min.js"></script>
 </head>
+<script type="text/javascript">
+$(document).ready(function () {
+    //Disable full page
+    $("body").on("contextmenu",function(e){
+        return false;
+    });
+    
+    //Disable part of page
+    $("#id").on("contextmenu",function(e){
+        return false;
+    });
+});
+</script>
+<script type="text/javascript"> 
+document.onkeydown = function(e) {
+        if (e.ctrlKey && 
+            (e.keyCode === 67 || 
+             e.keyCode === 86 || 
+             e.keyCode === 85 || 
+             e.keyCode === 117)) {
+            alert('not allowed');
+            return false;
+        } else {
+            return true;
+        }
+};
+</script>
 <input type="hidden" id="refreshed" value="no">
 <script type="text/javascript"> 
 onload = function() 
@@ -51,7 +82,7 @@ onload = function()
       
          <!-- Sidebar -->
              
-        <div id="sidebar_collapse" style="background-color: lightblue;margin-top: 100px"  class="col-sm-3 col-lg-2 sidebar collapse in">
+        <div id="sidebar"  class="col-sm-3 col-lg-2 sidebar collapse in">
             <div style="margin-left: 0px">
                 <h3 class="text-left" style="color: #555D50;">Dashboard</h3>
             </div>
@@ -61,10 +92,10 @@ onload = function()
                <li id="upload"><a href="UploadExpert.jsp"><span class="glyphicon glyphicon-book"></span> Upload Expert List</a></li>
              <li id="addExpert"><a href="AddRoles.jsp"><span class="glyphicon glyphicon-book"></span> Add Expert/Student</a></li>
                  <li id="student"><a href="student_data.jsp"><span class="glyphicon glyphicon-book"></span> View Student Data</a></li>          
-              <li id="expert"><a href="expert_data.jsp"><span class="glyphicon glyphicon-book"></span>View Expert Data</a></li>
-              <li id="expert"><a href="Assign_ppi.jsp"><span class="glyphicon glyphicon-book"></span>Assign PPI</a></li>
+              <li id="expert"><a href="expert_data.jsp"><span class="glyphicon glyphicon-book"></span> View Expert Data</a></li>
+              <li id="expert"><a href="Assign_ppi.jsp"><span class="glyphicon glyphicon-book"></span> Assign PPI</a></li>
           <li id="expert"><a href="assigned_students.jsp"><span class="glyphicon glyphicon-book"></span>View Assigned Students</a></li>
-      <li id="expert"><a href="Analysis.jsp"><span class="glyphicon glyphicon-book"></span>Analysis of Students</a></li>
+      <li id="expert"><a href="Analysis.jsp"><span class="glyphicon glyphicon-book"></span> Analysis of Students</a></li>
             </ul>
         </div>
         <!-- Sidebar ends --> 
@@ -75,11 +106,11 @@ onload = function()
 		request.setAttribute("Experts", ExpertDao.getExperts());
 	%>
 	
-	 <div class="col-sm-2 col-lg-8">
+	 <div class="box col-sm-offset-1 col-sm-8" style="margin-top: 20px">
 	
-	<table class="table">
+	<table class="table table-hover">
 		 <thead>
-                    <tr class="info">
+                    <tr class="active">
                         <th> Expert Name</th>
                         <th> Expert Id</th>
                     </tr>
@@ -97,4 +128,7 @@ onload = function()
 	</div>
 
 </body>
+<footer>
+		<p class="text-right">&copy; The NorthCap University, Gurugram</p>		 
+	</footer>
 </html>

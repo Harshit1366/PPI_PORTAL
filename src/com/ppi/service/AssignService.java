@@ -1,15 +1,11 @@
 package com.ppi.service;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 //import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-//import java.sql.ResultSet;
-//import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -27,14 +23,12 @@ import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DataFormatter;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import com.ppi.database.ConnectionFactory;
+import com.ppi.impl.ReaderIMPL;
 import com.ppi.model.Ppi;
 
-//import com.ppi.model.Ppi;
+
 
 /**
  * Servlet implementation class AssignService
@@ -43,7 +37,8 @@ import com.ppi.model.Ppi;
 public class AssignService extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	String savefile = "C:/Users/Harshit/Desktop/new";
+	String savefile = System.getProperty("catalina.base") + "\\PPIUploads";
+	//String savefile = "C:\\Users\\Harshit\\Desktop\\PPIUploads";
 	
 	private File checkExist(String fileName) {
 
@@ -80,13 +75,8 @@ public class AssignService extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
-		
-		
-		
+	
 		Connection con=null;
-		
-		 
-		
 		File f = null;
 		
 		HttpSession sess=request.getSession();  
@@ -95,11 +85,8 @@ public class AssignService extends HttpServlet {
 		List<String[]> formdata = new ArrayList<>();
 		try {
 			
-			Class.forName("com.mysql.jdbc.Driver");
-	         con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ppi","root","root");
+	         con = ConnectionFactory.getConnection();
 	         con.setAutoCommit(false);
-			
-			
 			boolean ismultipart = ServletFileUpload.isMultipartContent(request);
 			if (!ismultipart) {
 
@@ -164,42 +151,45 @@ public class AssignService extends HttpServlet {
 				
           PreparedStatement pstm = null;
 
-          FileInputStream file = new FileInputStream(new File(f.getAbsolutePath()));
+//          FileInputStream file = new FileInputStream(new File(f.getAbsolutePath()));
+//
+//          XSSFWorkbook workbook = new XSSFWorkbook(file);
+//
+//          XSSFSheet sheet = workbook.getSheetAt(0);
+//          
+//          List<String> expert=new ArrayList<String>();
+//
+//          for(int i=0; i<=sheet.getLastRowNum(); i++)
+//          {
+//              
+//              DataFormatter formatter = new DataFormatter();
+//              Cell cell = sheet.getRow(i).getCell(0);
+//              String name = formatter.formatCellValue(cell);
+//              
 
-          XSSFWorkbook workbook = new XSSFWorkbook(file);
+//              
+//              //System.out.println("Name : "+name+" \tId : "+id+"\t Password : "+pass);
+//              
+//              expert.add(name);
+//              
 
-          XSSFSheet sheet = workbook.getSheetAt(0);
+//              //System.out.println("Import rows "+i);
+//          }
+//          sess.setAttribute("experts",expert);
+//          file.close();
+//          workbook.close();
+          
           
           List<String> expert=new ArrayList<String>();
-
-          for(int i=0; i<=sheet.getLastRowNum(); i++)
-          {
-              
-              DataFormatter formatter = new DataFormatter();
-              Cell cell = sheet.getRow(i).getCell(0);
-              String name = formatter.formatCellValue(cell);
-              
-//              Cell cell1 = sheet.getRow(i).getCell(1);
-//              String id = formatter.formatCellValue(cell1);
-//              
-//              Cell cell2 = sheet.getRow(i).getCell(2);
-//              String pass = formatter.formatCellValue(cell2);
-              
-              //System.out.println("Name : "+name+" \tId : "+id+"\t Password : "+pass);
-              
-              expert.add(name);
-              
-//              String sql = "INSERT INTO EXPERT_LOGIN VALUES('"+name+"','"+id+"','"+pass+"')";
-//              pstm = con.prepareStatement(sql);
-//              pstm.execute();
-              //System.out.println("Import rows "+i);
-          }
+          
+          List<List<String>> data = ReaderIMPL.readData(f.getAbsolutePath());
+			
+		for(List<String> row:data ){
+          expert.add(row.get(2));
+			}
+		//System.out.println(expert);
           sess.setAttribute("experts",expert);
-          file.close();
-          workbook.close();
-          
-          
-          
+
           String sql = "Select count(*) from records where ppi_assigned=?";
           
           pstm=con.prepareStatement(sql);
@@ -210,7 +200,7 @@ public class AssignService extends HttpServlet {
        	      a=rs.getInt(1);
           }
           
-          String sql5 = "Select rno,name from records  where ppi_assigned=?";
+          String sql5 = "Select rno,name from records where ppi_assigned=?";
           pstm=con.prepareStatement(sql5);
           pstm.setInt(1, 0);
           ResultSet rs2= pstm.executeQuery();

@@ -1,29 +1,27 @@
 package com.ppi.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.ppi.impl.AssignIMPL;
-import com.ppi.impl.ExpRecordsIMPL;
-
-
+import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class Stud_Knowledge
+ * Servlet implementation class EditKnowledge
  */
-@WebServlet("/ExpDetails")
-public class ExpDetails extends HttpServlet {
+@WebServlet("/EditKnowledge")
+public class EditKnowledge extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ExpDetails() {
+    public EditKnowledge() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,12 +34,17 @@ public class ExpDetails extends HttpServlet {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
-        String name= request.getParameter("name");
+        HttpSession sess=request.getSession();  
+		
         String rno= request.getParameter("rno");
-       
+        
+        String name= request.getParameter("name");
         
         String data= request.getParameter("data");
 
@@ -56,43 +59,24 @@ public class ExpDetails extends HttpServlet {
         String cn= request.getParameter("cn");
   
         String app= request.getParameter("app");
-
         
-        String team= request.getParameter("team");
+        List<String> eknow=new ArrayList<String>();
         
-        String enth= request.getParameter("enth");
-
-        String conf= request.getParameter("conf");
-
-        String clean= request.getParameter("clean");
-
-        String oral= request.getParameter("oral");
+        eknow.add(rno);
+        eknow.add(name);
+        eknow.add(data);
+        eknow.add(logic);
+        eknow.add(cao);
+        eknow.add(dbms);
+        eknow.add(os);
+        eknow.add(cn);
+        eknow.add(app);
         
-        String lang= request.getParameter("lang");
-
-        String prob= request.getParameter("prob");
- 
-        String skill= request.getParameter("skill");
-
+        sess.setAttribute("eknowledge",eknow);
+        sess.setAttribute("studname", name);
+        sess.setAttribute("studroll", rno);
         
-        String remarks= request.getParameter("remarks");
-    
+        response.sendRedirect("expert/editSkills.jsp");
+	}
 
-    try{
-   
-        ExpRecordsIMPL.addKnowledge(rno, name, data, logic, cao, dbms, os, cn, app);
-        ExpRecordsIMPL.addSkills(rno, name, team, enth, conf, clean, oral, lang, prob, skill);
-        ExpRecordsIMPL.addRemarks(rno, remarks);
-        AssignIMPL.updateAssign(rno);
-  
-    }
-    catch(Exception e)
-    {
-       System.out.println(e); 
-    }
-    
-    response.sendRedirect("expert/expert.jsp");
-   
-    
-    }
 }

@@ -75,11 +75,18 @@ public class UploadFeedback extends HttpServlet {
 		           ps.setInt(6,r15);
 		           ps.setInt(7,r16);
 		           ps.setInt(8,r17);
-		           ps.executeUpdate();
+
+		           if( ps.executeUpdate() > 0)
+		           {
+		           PreparedStatement ps1=con.prepareStatement("update records set feedback=? where rno=?");
+		           ps1.setInt(1, 1);
+		           ps1.setString(2, id);
+		           ps1.executeUpdate();
+		           }
 		             
 		          
 		       con.close();
-		       response.sendRedirect("feedback.jsp");
+		       response.sendRedirect("student/student.jsp");
 		 
 		       }
 		 catch(Exception e)

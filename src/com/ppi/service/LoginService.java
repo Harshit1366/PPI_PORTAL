@@ -54,7 +54,7 @@ public class LoginService extends HttpServlet {
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
 			String role = request.getParameter("role");
-			System.out.println(username+password+role);
+			//System.out.println(username+password+role);
 			if(username.isEmpty()|| password.isEmpty() || role.isEmpty()){
 				throw new IllegalArgumentException();
 			}

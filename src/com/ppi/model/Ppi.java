@@ -2,7 +2,13 @@ package com.ppi.model;
 
 public class Ppi {
 	
-	String roll,expert;
+	String roll,expert,date;
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
 	int assign;
 	public String getRoll() {
 		return roll;

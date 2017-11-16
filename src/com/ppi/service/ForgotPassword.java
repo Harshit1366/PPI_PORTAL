@@ -43,9 +43,9 @@ public class ForgotPassword extends HttpServlet {
 		LoginIMPL dao = new LoginIMPL();
 		String username = request.getParameter("username");
 		String token = dao.forgotRequest(username);
-		String link = "http://localhost:8080/PPI1/account/forgot_password_response.jsp?token="+token;
+		String link = "http://localhost:8080/PPI_PORTAL/account/forgot_password_response.jsp?token="+token;
 		String to = dao.getEmailByUsername(username);
-		EmailService.sendEmail("NCU: Forgot Password", link, to);
+		EmailService.sendEmail("NCU : Forgot Password", link, to);
 		URL url = new URL(link);
 	    System.out.println(url);
 		response.sendRedirect("login.jsp");

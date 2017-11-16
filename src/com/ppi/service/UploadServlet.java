@@ -27,7 +27,7 @@ import org.apache.commons.io.FilenameUtils;
 @WebServlet("/UploadServlet")
 public class UploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	String savefile = "C:/Users/Harshit/Desktop/new";
+	String savefile = System.getProperty("catalina.base") + "\\PPIUploads";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -86,7 +86,7 @@ public class UploadServlet extends HttpServlet {
 						//System.out.println(f.getAbsolutePath());
  	                   String ext=itemname.substring(itemname.lastIndexOf('.')+1);
  	           if ((ext.equalsIgnoreCase("txt"))||(ext.equalsIgnoreCase("doc"))||(ext.equalsIgnoreCase("docx"))|| (ext.equalsIgnoreCase("xlsx")) || (ext.equalsIgnoreCase("pdf"))){
- 	                   tosave=new File("C:/xampp/tomcat/work/NCUPPI/",itemname);
+ 	                   tosave=new File(savefile,itemname);
 
  	             }
  	             

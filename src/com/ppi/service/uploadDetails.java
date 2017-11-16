@@ -49,31 +49,25 @@ public class uploadDetails extends HttpServlet {
 		//doGet(request, response);
 		
 		String roll[]= request.getParameterValues("checkbox");
-		for(int i=0;i<roll.length;i++){
-			System.out.println(roll[i]);
-		}
+	    //for(int i=0;i<roll.length;i++)
+		//System.out.println(roll[i]);
 		
 		HttpSession sess=request.getSession();  
-		//int no=(int) sess.getAttribute("no");
-		//int no=Integer.parseInt((String) sess.getAttribute("no"));
-		//String date=(String) sess.getAttribute("date");
+
+		String date=(String) sess.getAttribute("date");
 		ArrayList<?> expert=(ArrayList<?>) sess.getAttribute("experts");
 		
 		Connection con=null;
 		
-		
-		
+			
         try
         {        	
                    con=ConnectionFactory.getConnection();
-                   //con.setAutoCommit(false);
                    PreparedStatement ps = null,ps2=null;
                    List<Ppi> list=new ArrayList<Ppi>();
-                   int a = 0,b = 0,c,d;//,e=0;
+                   int a = 0,b = 0,c,d;
                    String x = null,y = null;
-                   
-
-                   //System.out.println(expert);
+             
                    
                    a=roll.length;
                    
@@ -81,33 +75,26 @@ public class uploadDetails extends HttpServlet {
 
                    c=a/b;
                    d=a%b;
-                   
-//                   System.out.println("a : "+a);
-//                   System.out.println("b : "+b);
-//                   System.out.println("c : "+c);
-//                   System.out.println("d : "+d);
 
                    int k=0;
-                  
                    
-                	  
+
                     	   for(int j=0;j<c;j++){   
                     		   for(int i=0;i<b;i++){
                                
                                if(k!=a){
-                            	   //System.out.println("k : "+(k+1));                             	   
+                                       	   
                             	   x=(String) expert.get(i);
-                            	   //System.out.println("x : "+x);
-
                             	   y=roll[k];
-                            	   //System.out.println("y : "+y);
-                           		
-                      				Ppi p=new Ppi();
+                            	   Ppi p=new Ppi();
+
                       				p.setExpert(x);
                       				p.setRoll(y);
                       				p.setAssign(1);
+                      				p.setDate(date);
 
                       				list.add(p);
+                      				//System.out.println("Added in list!");
                                }
                     		   k++;
                     		   
@@ -118,23 +105,19 @@ public class uploadDetails extends HttpServlet {
                 	   if(d!=0){
 
                 		   for(int i=0;i<d;i++){
-                           
-                           //System.out.println("k : "+(k+1));  
                                           	   
                         	   x=(String)expert.get(i);
-                        	   //System.out.println("x : "+x);
-
+                
                         	   y=roll[k];
-                        	   //System.out.println(y);
-
-                        	   
                         	   Ppi p=new Ppi();
+     
                  				p.setExpert(x);
                  				p.setRoll(y);
                  				p.setAssign(1);
+                 				p.setDate(date);
 
                  				list.add(p);
-                 				
+                 				//System.out.println("Added in list!");
                  				k++;
                 	   }
                 	   
@@ -142,24 +125,35 @@ public class uploadDetails extends HttpServlet {
            	   }
 
         	Iterator<Ppi> itr2=list.iterator();
+        	
+        	int res=0;
 
      	    while(itr2.hasNext())
      	    {
-     	        Ppi p = itr2.next();
-     	           String sql = "insert into assign(expert_id,student_id) values(?,?)";
+     	        Ppi p1 = itr2.next();
+     	        
+     	           //System.out.println(p1.getExpert()+" "+p1.getRoll()+" "+p1.getDate());
+     	           String sql = "insert into assign(expert_id,student_id,date) values(?,?,?)";
        		       ps=con.prepareStatement(sql);
-           		   ps.setString(1,p.getExpert());
-                   ps.setString(2,p.getRoll());
-                   //System.out.println(ps.executeUpdate());
+           		   ps.setString(1,p1.getExpert());
+                   ps.setString(2,p1.getRoll());
+                   ps.setString(3,p1.getDate());
+                   
+                   res=ps.executeUpdate();
+                   
                    String sql2 = "update records set ppi_assigned = ? where rno = ?";
            		   ps2=con.prepareStatement(sql2);
-           		   ps2.setInt(1, p.getAssign());
-           		   ps2.setString(2, p.getRoll());
-           		   //System.out.println(ps2.executeUpdate());
-
-                   }
+           		   ps2.setInt(1, p1.getAssign());
+           		   ps2.setString(2, p1.getRoll());
+           		   
+           		   if(res>0){
+           		   //System.out.println("Updated the list!");
+           		   ps2.executeUpdate();
+           		   }
+             }
   
      	    ps.close();
+     	    ps2.close();
      	    con.close();
      	    
         response.sendRedirect("admin/assigned_students.jsp");

@@ -2,7 +2,15 @@ package com.ppi.model;
 
 public class Assign {
 
-	private String expert,studId,studName;
+	private String expert,studId,studName,date;
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
 	private int ppi;
 
 

@@ -3,6 +3,7 @@ package com.ppi.impl;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.io.IOException;
@@ -23,6 +24,40 @@ import com.ppi.model.Login;
 
 
 public class LoginIMPL {
+	
+	public static String getRole(String id){
+		Connection connection=null;
+	    ResultSet rs = null;
+	    String res=null;
+	    try{
+	    	connection = ConnectionFactory.getConnection();
+	        PreparedStatement ps = connection.prepareStatement("select role from login where username=?");
+	        ps.setString(1, id);
+	        rs = ps.executeQuery();
+	        while(rs.next()){
+	        	res=rs.getString(1);
+	        }
+	    }
+	    catch(SQLException s){
+	        s.printStackTrace();
+	    }
+	    catch(Exception e){
+	        e.printStackTrace();
+	    }
+	    finally{
+			
+			try {
+				rs.close();
+				ConnectionFactory.close(connection);
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+	    }
+		return res;
+	}
+
+
 
 	public String getNewPassword(){
 
@@ -72,13 +107,13 @@ public class LoginIMPL {
 	public LoginStatus validateLogin(String username, String password, String role) {
 
 		Login login = getLogin(username);
-		System.out.println(login);
+		//System.out.println(login);
 		if (login == null) {
 			return LoginStatus.NO_SUCH_ACCOUNT_FOUND;
 		}
 		if (role.equals(login.getRole())) {
 			if (login.getStatus().equals("active")) {
-				System.out.println(Bcrypt.hashpw(password, login.getSalt()) + " " + login.getPassword());
+				//System.out.println(Bcrypt.hashpw(password, login.getSalt()) + " " + login.getPassword());
 
 				if (login.getPassword().equals(Bcrypt.hashpw(password, login.getSalt()))) {
 					return LoginStatus.SUCCESS;
@@ -101,7 +136,7 @@ public class LoginIMPL {
 		try {
 			conn = ConnectionFactory.getConnection();
 			ps1 = conn.prepareStatement("select * from login where username=?");
-			System.out.println(username);
+			//System.out.println(username);
 			ps1.setString(1, username);
 			ResultSet set = ps1.executeQuery();
 			if (set.next()) {

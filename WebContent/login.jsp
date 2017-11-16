@@ -15,7 +15,35 @@
     	<style>
 			@import url('https://fonts.googleapis.com/css?family=Lora');
 		</style>
-  	</head>
+  <script src="jquery.min.js"></script>
+</head>
+<script type="text/javascript">
+$(document).ready(function () {
+    //Disable full page
+    $("body").on("contextmenu",function(e){
+        return false;
+    });
+    
+    //Disable part of page
+    $("#id").on("contextmenu",function(e){
+        return false;
+    });
+});
+</script>
+<script type="text/javascript"> 
+document.onkeydown = function(e) {
+        if (e.ctrlKey && 
+            (e.keyCode === 67 || 
+             e.keyCode === 86 || 
+             e.keyCode === 85 || 
+             e.keyCode === 117)) {
+            alert('not allowed');
+            return false;
+        } else {
+            return true;
+        }
+};
+</script>
 <input type="hidden" id="refreshed" value="no">
 <script type="text/javascript"> 
 onload = function() 

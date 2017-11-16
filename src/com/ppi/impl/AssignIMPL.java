@@ -19,7 +19,7 @@ static Connection connection = null;
 		
 		try{
 			connection = ConnectionFactory.getConnection();
-			PreparedStatement ps=connection.prepareStatement("select expert_id,student_id,name,ppi_taken from assign,records "
+			PreparedStatement ps=connection.prepareStatement("select expert_id,student_id,name,date,ppi_taken from assign,records "
 					+ "where assign.student_id=records.rno");
 			ResultSet rs=ps.executeQuery();
 			while(rs.next()){
@@ -27,7 +27,8 @@ static Connection connection = null;
 				a.setExpert(rs.getString(1));
 				a.setStudId(rs.getString(2));
 				a.setStudName(rs.getString(3));
-				a.setPpi(rs.getInt(4));
+				a.setDate(rs.getString(4));
+				a.setPpi(rs.getInt(5));
 				list.add(a);
 			}
 			connection.close();
@@ -61,5 +62,38 @@ static Connection connection = null;
 		
     }
 
+	
+	public static int getPPI(String id){
+
+	    ResultSet rs = null;
+	    int res=0;
+	    try{
+	    	connection = ConnectionFactory.getConnection();
+	        PreparedStatement ps = connection.prepareStatement("select ppi_taken from assign where student_id=?");
+	        ps.setString(1, id);
+	        rs = ps.executeQuery();
+	        while(rs.next()){
+	        	res=rs.getInt(1);
+	        }
+	        //return res;
+	    }
+	    catch(SQLException s){
+	        s.printStackTrace();
+	    }
+	    catch(Exception e){
+	        e.printStackTrace();
+	    }
+	    finally{
+			
+			try {
+				rs.close();
+				ConnectionFactory.close(connection);
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+	    }
+		return res;
+	}
 
 }

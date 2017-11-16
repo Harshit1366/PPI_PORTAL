@@ -77,6 +77,38 @@ public static List<Record> getStudents(){
 	return list;
 }
 
+public static String getName(String id){
+
+    ResultSet rs = null;
+    String res=null;
+    try{
+    	connection = ConnectionFactory.getConnection();
+        PreparedStatement ps = connection.prepareStatement("select name from records where rno=?");
+        ps.setString(1, id);
+        rs = ps.executeQuery();
+        while(rs.next()){
+        	res=rs.getString(1);
+        }
+    }
+    catch(SQLException s){
+        s.printStackTrace();
+    }
+    catch(Exception e){
+        e.printStackTrace();
+    }
+    finally{
+		
+		try {
+			rs.close();
+			ConnectionFactory.close(connection);
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+    }
+	return res;
+}
+
 
 public static int getAssess(String id){
 
@@ -111,7 +143,39 @@ public static int getAssess(String id){
 	return res;
 }
 
-	
+public static int getFeedback(String id){
+
+    ResultSet rs = null;
+    int res=0;
+    try{
+    	connection = ConnectionFactory.getConnection();
+        PreparedStatement ps = connection.prepareStatement("select feedback from records where rno=?");
+        ps.setString(1, id);
+        rs = ps.executeQuery();
+        while(rs.next()){
+        	res=rs.getInt(1);
+        }
+    }
+    catch(SQLException s){
+        s.printStackTrace();
+    }
+    catch(Exception e){
+        e.printStackTrace();
+    }
+    finally{
+		
+		try {
+			rs.close();
+			ConnectionFactory.close(connection);
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+    }
+	return res;
+}
+
+
 	public static Knowledge getRecordById(String id){
 
         Knowledge k = new Knowledge();
@@ -401,8 +465,8 @@ public static int getAssess(String id){
     }
 
 	
-	public static void addKnowledge(String id,String name,String ds, String algo,String logic,String cao,String dbms, String os, String network,String info, String soft_dev,String soft_pro,String mobi,String data, String metric, String internet,String app_dev, String bus_fin,String bus_intel,String hr,String ms, String er){
-		
+	public static boolean addKnowledge(String id,String name,String ds, String algo,String logic,String cao,String dbms, String os, String network,String info, String soft_dev,String soft_pro,String mobi,String data, String metric, String internet,String app_dev, String bus_fin,String bus_intel,String hr,String ms, String er){
+		int res=0;
         try{
         	connection = ConnectionFactory.getConnection();
             PreparedStatement ps = connection.prepareStatement("insert into knowledge values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
@@ -451,7 +515,7 @@ public static int getAssess(String id){
 
 			ps.setString(23, String.valueOf(a+b+c+d+e+f+g+h+i+j+k+l+m+n+o+p+q+r+s+t));
 
-            ps.execute();
+            res=ps.executeUpdate();
          
         }
         catch(SQLException s){
@@ -463,11 +527,15 @@ public static int getAssess(String id){
         finally{
             ConnectionFactory.close(connection);
         }
+        if((res)>0)
+        	return true;
+        else
+        	return false;
 
     }
 	
-	public static void addSkills(String id,String name,String it,String lis,String oral,String written,String body,String concept,String ei,String reso,String prob,String org,String inter,String social,String inno,String pro,String multi,String obs,String ana,String nego,String robust,String time){
-
+	public static boolean addSkills(String id,String name,String it,String lis,String oral,String written,String body,String concept,String ei,String reso,String prob,String org,String inter,String social,String inno,String pro,String multi,String obs,String ana,String nego,String robust,String time){
+		int res=0;
         try{
         	connection = ConnectionFactory.getConnection();
             PreparedStatement ps = connection.prepareStatement("insert into skills values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
@@ -516,7 +584,7 @@ public static int getAssess(String id){
 
 			ps.setString(23, String.valueOf(a+b+c+d+e+f+g+h+i+j+k+l+m+n+o+p+q+r+s+t));
 			
-			ps.execute();
+			res=ps.executeUpdate();
            
         }
         catch(SQLException se){
@@ -528,11 +596,15 @@ public static int getAssess(String id){
         finally{
             ConnectionFactory.close(connection);
         }
+        if((res)>0)
+        	return true;
+        else
+        	return false;
 		
     }
 	
-	public static void addAttitude(String id,String name,String pos,String inte,String depend,String disc,String exc,String per,String enth,String conf,String init,String far,String team,String learn,String open,String adapt,String emp,String concern,String fair,String mode,String ethics,String clean){
-
+	public static boolean addAttitude(String id,String name,String pos,String inte,String depend,String disc,String exc,String per,String enth,String conf,String init,String far,String team,String learn,String open,String adapt,String emp,String concern,String fair,String mode,String ethics,String clean){
+        int res=0;
         try{
         	connection = ConnectionFactory.getConnection();
             PreparedStatement ps = connection.prepareStatement("insert into attitude values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
@@ -581,7 +653,7 @@ public static int getAssess(String id){
 			int t=Integer.valueOf(clean);
 
 			ps.setString(23, String.valueOf(a+b+c+d+e+f+g+h+i+j+k+l+m+n+o+p+q+r+s+t));
-            ps.execute();
+            res=ps.executeUpdate();
             
         }
         catch(SQLException s){
@@ -593,7 +665,10 @@ public static int getAssess(String id){
         finally{
             ConnectionFactory.close(connection);
         }
-	
+        if((res)>0)
+        	return true;
+        else
+        	return false;
     }
 
 	

@@ -168,10 +168,12 @@ public class Stud_details extends HttpServlet {
 
     try{
    
-        RecordsIMPL.addKnowledge(rno, name, data, algo, log, cao, dbms, os, network, info, dev, pro, mob, mining ,sm, inter, app, fin, intel, hr, ms, er);
-        RecordsIMPL.addSkills(rno, name, it, lis, oral, writ, body, con, ei, reso, prob, org, per, soc, inno, act, task ,obs, ana, nego, com ,time);
-        RecordsIMPL.addAttitude(rno, name, pos, inte, dep, dis, ex, pers, ent, conf, init, far, team, des, open, ada, emp, conc, fair, mod, eth, clean);
+        boolean a=RecordsIMPL.addKnowledge(rno, name, data, algo, log, cao, dbms, os, network, info, dev, pro, mob, mining ,sm, inter, app, fin, intel, hr, ms, er);
+        boolean b=RecordsIMPL.addSkills(rno, name, it, lis, oral, writ, body, con, ei, reso, prob, org, per, soc, inno, act, task ,obs, ana, nego, com ,time);
+        boolean c=RecordsIMPL.addAttitude(rno, name, pos, inte, dep, dis, ex, pers, ent, conf, init, far, team, des, open, ada, emp, conc, fair, mod, eth, clean);
+        if(a && b && c){
         RecordsIMPL.updateAssess(rno);
+        }
   
     }
     catch(Exception e)

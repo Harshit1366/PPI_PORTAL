@@ -13,7 +13,7 @@ public class Redirect {
 		break;
 		case "ROLE_ADMIN": url =  "admin/admin_home.jsp";
 		break;
-		case "ROLE_EXPERT": url =  "expert/expert.jsp";
+		case "ROLE_EXPERT": url =  "expert/expertKnowledge.jsp";
 		break;
 		default:
 		}

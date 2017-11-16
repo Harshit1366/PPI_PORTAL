@@ -14,13 +14,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Reset New Password</title>
-
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link href="https://fonts.googleapis.com/css?family=Montserrat"
-	rel="stylesheet" type="text/css">
-<link href="https://fonts.googleapis.com/css?family=Lato"
-	rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">  
+   <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/login_css.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <style>
@@ -43,10 +40,49 @@ input {
 	border-style: none;
 }
 </style>
-
-</style>
-
+  <script src="jquery.min.js"></script>
 </head>
+<script type="text/javascript">
+$(document).ready(function () {
+    //Disable full page
+    $("body").on("contextmenu",function(e){
+        return false;
+    });
+    
+    //Disable part of page
+    $("#id").on("contextmenu",function(e){
+        return false;
+    });
+});
+</script>
+<script type="text/javascript"> 
+document.onkeydown = function(e) {
+        if (e.ctrlKey && 
+            (e.keyCode === 67 || 
+             e.keyCode === 86 || 
+             e.keyCode === 85 || 
+             e.keyCode === 117)) {
+            alert('not allowed');
+            return false;
+        } else {
+            return true;
+        }
+};
+</script>
+<input type="hidden" id="refreshed" value="no">
+<script type="text/javascript"> 
+onload = function() 
+{ 
+	var e = document.getElementById("refreshed"); 
+    if (e.value == "no") 
+	e.value = "yes"; 
+	else
+	{
+    e.value = "no"; 
+	location.reload(); 
+	} 
+	} 
+	</script>
 <body>
 	<jsp:useBean id="dao" class="com.ppi.impl.LoginIMPL"></jsp:useBean>
 	<%
@@ -76,54 +112,34 @@ input {
 		if (data.length != 0) {
 			if (duration <= 86400000 && duration > 0) {
 	%>
-	<div class="container">
-		<div class="row">
-		<br><br><br><br><br><br><br><br><br>
-			<div class="col-md-6" align="center">
-				<h3>
-					<strong>The NorthCap University</strong>
-				</h3>
-				<p>Sector-23A, Gurugram</p>
-				<h4>
-					<strong>PPI Module</strong>
-				</h4>
-			</div>
-			<div class="col-md-6 form-group" align="center">
-
-				<form method="POST" action="../ResetPassword">
-					<table>
-
-						<tr>
-							<td><label for="password">Enter New Password</label></td>
-							<input type="hidden" name="id"
-								value='<c:out value="<%=token%>"/>'>
-						</tr>
-						<tr>
-							<td><input type="password" name="password" id="password"></td>
-						</tr>
-						<tr>
-							<td><label for="password_again">Enter New Password
-									Again</label></td>
-						</tr>
-						<tr>
-							<td><input type="password" name="password_again"
-								id="password_again"></td>
-						</tr>
-						<tr>
-							<td><br></td>
-						</tr>
-						<tr>
-							<td>
-								<button class="form-control" type="submit">Submit</button>
-							</td>
-						</tr>
-					</table>
-
-				</form>
-			</div>
+    <header>
+		<div class="jumbotron" id="orange"></div>
+		<div class="jumbotron text-center" id="maroon">
+            <h2>The NorthCap University</h2>
 		</div>
-	</div>
-	<%
+    </header>
+       
+  		<div class = "container-fluid box">
+  			<div class="row">
+  				<div class="col-sm-offset-4 col-sm-4">
+  				<form action="../ResetPassword" method="POST">
+                    <h1 class="text-center">Reset Password</h1>    
+  					<div class="form-group login">
+  						<br>
+  						<label class="col-sm-6">Enter new password:</label>
+  						<input type="password" required placeholder="" name="password" class="form-control">
+  						<br>
+                        <label class="col-sm-8">Enter new password again:</label>
+  						<input type="password" required placeholder="" name="password" class="form-control">
+  						<br>
+  						<div class="text-center">
+  						<button type="submit" class=" btn btn-info">Submit</button>	</div>
+  					</div>
+  					</form>
+  				</div>
+  			</div>
+  		</div>
+<% 
 		} else {
 				UUID uuid = UUID.randomUUID();
 				String newID = uuid.toString();
@@ -153,4 +169,7 @@ input {
 	%>
 
 </body>
+    <footer>
+		<p class="text-right">&copy; The NorthCap University, Gurugram</p>		 
+	</footer>
 </html>
