@@ -1,0 +1,1 @@
+web: java -jar target/aqueous-scrubland-36978-1.0.jar
