@@ -11,8 +11,8 @@ import javax.mail.internet.MimeMessage;
 
 public class EmailService {
 	
-	final static String EMAIL = "ppi.ncuindia@gmail.com";
-	final static String PASSWORD = "poilkjmnb098";
+	final static String EMAIL = "*************"; // email
+	final static String PASSWORD = "*************"; // password
 
 	public static void sendEmail(String subject, String text, String to){
 		Properties properties = System.getProperties();
